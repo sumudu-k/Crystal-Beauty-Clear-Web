@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 
     if (token != null) {
         // Verify the token using the secret key 'cbc0521'
-        jwt.verify(token, "cbc0521", (error, decoded) => {
+        jwt.verify(token, process.env.SECRET, (error, decoded) => {
             if (!error) {
                 // If the token is valid, log the decoded token
                 //console.log(decoded);

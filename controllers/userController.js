@@ -1,7 +1,8 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import dotenv from "dotenv";
+dotenv.config();
 export function createUser(req, res) {
 
     const newUserData = req.body;
@@ -40,7 +41,7 @@ export function loginUser(req, res) {
                     isBlocked: user.isBlocked,
                     type: user.type,
                     profilePicture: user.profilePicture
-                }, "cbc0521");
+                }, process.env.SECRET);
                 console.log(token);
                 res.json({
                     message: token
