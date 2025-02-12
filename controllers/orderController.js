@@ -31,6 +31,12 @@ export async function createOrder(req, res) {
         newOrderdata.orderId = orderId;
         newOrderdata.email = req.user.email;
 
+        //creates a new order
+        const order = new Order(newOrderdata);
+        await order.save();
+        res.json({
+            message: 'Order created successfully',
+        })
 
 
 
