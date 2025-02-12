@@ -15,7 +15,11 @@ export function createProduct(req, res) {
 }
 
 
-
+export function getProducts(req, res) {
+    Product.find().then((products) => {
+        res.json(products);
+    })
+}
 
 
 
