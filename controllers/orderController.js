@@ -1,8 +1,15 @@
 import Order from '../models/orderModel.js';
-
+import { isCustomer } from './userController.js';
 export async function createOrder(req, res) {
     //order number format
     // cbc0001
+
+    //first check user is logged in 
+    if (!isCustomer) {
+        res.status(401).json({
+            message: 'Please login to place an order'
+        })
+    }
 
     // take the latest order id
     try {
@@ -19,6 +26,11 @@ export async function createOrder(req, res) {
             const newNumber = (number + 1).toString().padStart(4, '0');
             orderId = 'CBC' + newNumber;
         }
+
+        const newOrderdata = req.body;
+        newOrderdata.orderId = orderId;
+        newOrderdata.email = req.user.email;
+
 
 
 
