@@ -1,14 +1,15 @@
-import Order from '../models/orderModel.js';
-import { isCustomer } from './userController.js';
+import Order from '../models/order.js';
+import { isCustomer } from '../controllers/userController.js';
 export async function createOrder(req, res) {
     //order number format
     // cbc0001
 
     //first check user is logged in 
-    if (!isCustomer) {
+    if (!isCustomer(req.user)) {
         res.status(401).json({
             message: 'Please login to place an order'
         })
+        return;
     }
 
     // take the latest order id
@@ -16,7 +17,7 @@ export async function createOrder(req, res) {
         const latestOrder = await Order.find().sort({ date: -1 }).limit(1);
 
         let orderId;
-        if (latestOrder.length === 0) {
+        if (latestOrder.length == 0) {
             orderId = 'CBC0001';
         }
         else {
