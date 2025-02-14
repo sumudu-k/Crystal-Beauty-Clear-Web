@@ -1,5 +1,7 @@
 import Order from '../models/order.js';
 import { isCustomer } from '../controllers/userController.js';
+import Product from '../models/product.js';
+
 export async function createOrder(req, res) {
     //order number format
     // cbc0001
@@ -35,7 +37,13 @@ export async function createOrder(req, res) {
         for (let i = 0; i < newOrderdata.orderedItems.length; i++) {
 
             //print the ordered items
-            console.log(newOrderdata.orderedItems[i]);
+            //console.log(newOrderdata.orderedItems[i]);
+
+            //Product is the model we created in product.js
+            const product = await Product.findOne({
+                productId: newOrderdata.orderedItems[i].productId
+            })
+            console.log(product);
         }
 
         newOrderdata.orderId = orderId;
