@@ -62,16 +62,19 @@ export async function createOrder(req, res) {
         }
         console.log(newProductArray);
 
+        //replace the ordered items array with the newProductArray
+        newOrderdata.orderedItems = newProductArray;
+
 
         newOrderdata.orderId = orderId;
         newOrderdata.email = req.user.email;
 
         //creates a new order
-        // const order = new Order(newOrderdata);
-        // await order.save();
-        // res.json({
-        //     message: 'Order created successfully',
-        // })
+        const order = new Order(newOrderdata);
+        await order.save();
+        res.json({
+            message: 'Order created successfully',
+        })
 
 
 
