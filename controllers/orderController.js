@@ -5,7 +5,7 @@ export async function createOrder(req, res) {
     // cbc0001
 
     //first check user is logged in 
-    if (!isCustomer(req.user)) {
+    if (!isCustomer(req)) {
         res.status(401).json({
             message: 'Please login to place an order'
         })
@@ -29,6 +29,15 @@ export async function createOrder(req, res) {
         }
 
         const newOrderdata = req.body;
+
+        const newProductArray = [];
+
+        for (let i = 0; i < newOrderdata.orderedItems.length; i++) {
+
+            //print the ordered items
+            console.log(newOrderdata.orderedItems[i]);
+        }
+
         newOrderdata.orderId = orderId;
         newOrderdata.email = req.user.email;
 
