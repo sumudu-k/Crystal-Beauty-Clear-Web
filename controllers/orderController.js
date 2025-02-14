@@ -40,6 +40,7 @@ export async function createOrder(req, res) {
             //console.log(newOrderdata.orderedItems[i]);
 
             //Product is the model we created in product.js
+            //load all product details from the product model which relavent to the ordered items
             const product = await Product.findOne({
                 productId: newOrderdata.orderedItems[i].productId
             })
@@ -51,18 +52,26 @@ export async function createOrder(req, res) {
                 return;
             }
 
-            console.log(product);
+            //get the product details what we need to create the ordered items array in json
+            newProductArray[i] = {
+                name: product.productName,
+                price: product.price,
+                quantity: newOrderdata.orderedItems[i].quantity,
+                image: product.images[0],
+            }
         }
+        console.log(newProductArray);
+
 
         newOrderdata.orderId = orderId;
         newOrderdata.email = req.user.email;
 
         //creates a new order
-        const order = new Order(newOrderdata);
-        await order.save();
-        res.json({
-            message: 'Order created successfully',
-        })
+        // const order = new Order(newOrderdata);
+        // await order.save();
+        // res.json({
+        //     message: 'Order created successfully',
+        // })
 
 
 
