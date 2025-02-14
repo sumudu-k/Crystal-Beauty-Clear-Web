@@ -43,6 +43,14 @@ export async function createOrder(req, res) {
             const product = await Product.findOne({
                 productId: newOrderdata.orderedItems[i].productId
             })
+
+            if (product == null) {
+                res.status(404).json({
+                    message: 'Product not found with product ID' + newOrderdata.orderedItems[i].productId
+                })
+                return;
+            }
+
             console.log(product);
         }
 
