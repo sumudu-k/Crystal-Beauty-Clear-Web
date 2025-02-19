@@ -60,10 +60,12 @@ export function loginUser(req, res) {
                 res.json({
                     message: "User Logged In",
                     token: token,
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    profilePicture: user.profilePicture
+                    user: {
+                        email: user.email,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        profilePicture: user.profilePicture
+                    }
                 })
 
             } else {
