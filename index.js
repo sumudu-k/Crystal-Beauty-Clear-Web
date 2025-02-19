@@ -6,6 +6,7 @@ import productRouter from './routes/productRouter.js';
 import orderRouter from './routes/orderRouter.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import cors from 'cors';
 dotenv.config();
 
 
@@ -21,6 +22,7 @@ connection.once('open', () => {
 });
 
 app.use(bodyParser.json())
+app.use(cors());
 
 app.use((req, res, next) => {
     // Extract the token from the 'Authorization' header and remove the 'Bearer ' prefix
