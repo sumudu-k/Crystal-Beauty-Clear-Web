@@ -56,8 +56,12 @@ export function loginUser(req, res) {
                     profilePicture: user.profilePicture
                 }, process.env.SECRET);
                 console.log(token);
+
                 res.json({
-                    message: token
+                    message: token,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName
                 })
 
             } else {
