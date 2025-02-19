@@ -58,10 +58,12 @@ export function loginUser(req, res) {
                 console.log(token);
 
                 res.json({
-                    message: token,
+                    message: "User Logged In",
+                    token: token,
                     email: user.email,
                     firstName: user.firstName,
-                    lastName: user.lastName
+                    lastName: user.lastName,
+                    profilePicture: user.profilePicture
                 })
 
             } else {
