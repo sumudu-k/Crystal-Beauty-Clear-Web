@@ -64,7 +64,8 @@ export function loginUser(req, res) {
                         email: user.email,
                         firstName: user.firstName,
                         lastName: user.lastName,
-                        profilePicture: user.profilePicture
+                        profilePicture: user.profilePicture,
+                        type: user.type
                     }
                 })
 
