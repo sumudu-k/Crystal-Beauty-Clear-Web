@@ -10,7 +10,7 @@ export function createProduct(req, res) {
     product.save().then(() => {
         res.json({ message: "Product created" });
     }).catch((error) => {
-        res.json({ message: error });
+        res.status(403).json({ message: error });
     })
 }
 
