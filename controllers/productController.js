@@ -35,7 +35,19 @@ export function deleteProduct(req, res) {
     })
 }
 
-
+export function updateProduct(req,res){
+    if(!isAdmin(req)){
+        res.status(403).json({ message: "You are not authorized to update a product" });
+        return;
+    }
+    const productId = req.params.productId;
+    const newProductData = req.body;
+    Product.updateOne({ productId: productId }, newProductData).then(() => {
+        res.json({ message: "Product updated" });
+    }).catch((error) => {
+        res.status(403).json({ message: error });
+    })
+}
 
 
 
