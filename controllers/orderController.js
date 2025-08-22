@@ -55,8 +55,8 @@ export async function createOrder(req, res) {
             //get the product details what we need to create the ordered items array in json
             newProductArray[i] = {
                 name: product.productName,
-                price: product.price,
-                quantity: newOrderdata.orderedItems[i].quantity,
+                price: product.lastPrice,
+                quantity: newOrderdata.orderedItems[i].qty,
                 image: product.images[0],
             }
         }
@@ -86,8 +86,63 @@ export async function createOrder(req, res) {
     }
 }
 
+export async function getOrders(req,res){
+    try{
+        const orders=await Order.find({email:req.user.email})
+    }catch(error){
+        res.status(500).json({
+            message:error.message
+        })
+    }
+}
+
+export async function getQuote(req,res){
+    try { 
+        const newOrderdata = req.body;
+        const newProductArray = [];
+        let total=0;
+        let labledTotal=0;
 
 
+        for (let i = 0; i < newOrderdata.orderedItems.length; i++) {
+            const product = await Product.findOne({
+                productId: newOrderdata.orderedItems[i].productId
+            })
+
+            if (product == null) {
+                res.status(404).json({
+                    message: 'Product not found with product ID' + newOrderdata.orderedItems[i].productId
+                })
+                return;
+            }
+            labledTotal+=product.price*newOrderdata.orderedItems[i].qty;
+            total+=product.lastPrice*newOrderdata.orderedItems[i].qty;
+
+            newProductArray[i] = {
+                name: product.productName,
+                price: product.lastPrice,
+                labeldPrice:product.price,
+                quantity: newOrderdata.orderedItems[i].qty,
+                image: product.images[0],
+            }
+        }
+        console.log(newProductArray);
+        newOrderdata.orderedItems = newProductArray;
+        newOrderdata.total=total;
+
+        res.json({
+            orderedItems:newProductArray,
+            total:total,
+            labledTotal:labledTotal
+        });
+
+
+    } catch (e) {
+        res.status(500).json({
+            message: e.message
+        })
+    }
+}
 
 
 
