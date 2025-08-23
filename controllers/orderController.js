@@ -1,5 +1,5 @@
 import Order from '../models/order.js';
-import { isCustomer } from '../controllers/userController.js';
+import { isAdmin, isCustomer } from '../controllers/userController.js';
 import Product from '../models/product.js';
 
 export async function createOrder(req, res) {
@@ -16,7 +16,7 @@ export async function createOrder(req, res) {
 
     // take the latest order id
     try {
-        const latestOrder = await Order.find().sort({ date: -1 }).limit(1);
+        const latestOrder = await Order.find().sort({ orderId: -1 }).limit(1);
 
         let orderId;
         if (latestOrder.length == 0) {
@@ -71,9 +71,10 @@ export async function createOrder(req, res) {
 
         //creates a new order
         const order = new Order(newOrderdata);
-        await order.save();
+        const savedOrder=await order.save();
         res.json({
             message: 'Order created successfully',
+            order:savedOrder
         })
 
 
@@ -88,7 +89,18 @@ export async function createOrder(req, res) {
 
 export async function getOrders(req,res){
     try{
-        const orders=await Order.find({email:req.user.email})
+        if(isCustomer(req)){
+            const orders=await Order.find({email:req.user.email})
+            res.json(orders)
+            return
+        }else if(isAdmin(req)){
+            const orders=await Order.find()
+            res.json(orders)
+            return
+        }else{
+            res.json("please login to see orders")
+        }
+        
     }catch(error){
         res.status(500).json({
             message:error.message
