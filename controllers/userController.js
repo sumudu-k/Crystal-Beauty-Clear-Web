@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import axios from "axios";
 dotenv.config();
 export function createUser(req, res) {
 
@@ -105,3 +106,25 @@ export function isCustomer(req) {
     }
     return true;
 }
+
+export async function googleLogin(req,res){
+    // in here user/google send a token when signin. get that token and send it to the googleapis to decode.decoded values send as a json
+    console.log(req.body)
+    const token=req.body.token
+    // https://www.googleapis.com/oauth2/v3/userinfo
+    try{
+        const response = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        res.json({
+            message:"Google login successful",
+            user:response.data
+        })
+    }catch(e){
+        res.json({message:"Google login failed"})
+    }
+
+}
+
