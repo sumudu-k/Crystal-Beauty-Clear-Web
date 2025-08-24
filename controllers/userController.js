@@ -118,10 +118,54 @@ export async function googleLogin(req,res){
                 Authorization:`Bearer ${token}`
             }
         })
-        res.json({
-            message:"Google login successful",
-            user:response.data
-        })
+        // res.json({
+        //     message:"Google login successful",
+        //     user:response.data
+        // })
+        const email=response.data.email
+        const usersList =await User.find({email:email})
+
+        if(usersList.length>0){
+            const user = usersList[0]
+            const token = jwt.sign({
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    isBlocked: user.isBlocked,
+                    type: user.type,
+                    profilePicture: user.profilePicture
+                }, process.env.SECRET)
+
+                res.json({message:"Userlogged in",
+                    token:token,
+                    user:{
+                        email: user.email,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        type: user.type,
+                        profilePicture: user.profilePicture
+                    }
+                })
+        }else{
+            //create a new user
+            const newUserData={
+                email:email,
+                firstName: response.data.given_name,
+                lastName: response.data.family_name,
+                type: "customer",
+                profilePicture: response.data.picture,
+                password:"random_pw"
+                // 
+            }
+            const user= new User(newUserData)
+            user.save().then(()=>{
+                res.json({message:"User created"})
+            }).catch((e)=>{
+                res.json({message:"user not found"})
+            })
+        }
+
+
     }catch(e){
         res.json({message:"Google login failed"})
     }
