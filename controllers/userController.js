@@ -157,12 +157,31 @@ export async function googleLogin(req,res){
                 password:"random_pw"
                 // 
             }
-            const user= new User(newUserData)
-            user.save().then(()=>{
-                res.json({message:"User created"})
-            }).catch((e)=>{
-                res.json({message:"user not found"})
-            })
+            const user = new User(newUserData)
+    user.save().then((savedUser)=>{
+        const token = jwt.sign({
+            email: savedUser.email,
+            firstName: savedUser.firstName,
+            lastName: savedUser.lastName,
+            isBlocked: savedUser.isBlocked,
+            type: savedUser.type,
+            profilePicture: savedUser.profilePicture
+        }, process.env.SECRET)
+
+        res.json({
+            message:"User created",
+            token: token,
+            user: {
+                email: savedUser.email,
+                firstName: savedUser.firstName,
+                lastName: savedUser.lastName,
+                type: savedUser.type,
+                profilePicture: savedUser.profilePicture
+            }
+        })
+    }).catch((e)=>{
+        res.json({message:"user not created"})
+    })
         }
 
 
