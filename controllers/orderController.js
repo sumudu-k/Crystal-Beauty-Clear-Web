@@ -158,6 +158,52 @@ export async function getQuote(req,res){
 
 
 
+export async function updateOrderStatus(req, res) {
+    try {
+        if (!isAdmin(req)) {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+
+        const { orderId } = req.params;
+        let { status } = req.body || {};
+        if (!orderId) {
+            return res.status(400).json({ message: 'orderId is required' });
+        }
+        if (!status) {
+            return res.status(400).json({ message: 'status is required' });
+        }
+
+        // Normalize and validate status
+        const normalize = (s) => {
+            const x = String(s).toLowerCase();
+            if (x === 'preparing') return 'Preparing';
+            if (x === 'shipped') return 'Shipped';
+            if (x === 'delivered') return 'Delivered';
+            if (x === 'canceled' || x === 'cancelled') return 'Canceled';
+            return s;
+        };
+        status = normalize(status);
+        const allowed = ['Preparing', 'Shipped', 'Delivered', 'Canceled'];
+        if (!allowed.includes(status)) {
+            return res.status(400).json({ message: 'Invalid status' });
+        }
+
+        const updated = await Order.findOneAndUpdate(
+            { orderId },
+            { $set: { status } },
+            { new: true }
+        );
+        if (!updated) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        res.json({ message: 'Status updated', order: updated });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+
 
 
 

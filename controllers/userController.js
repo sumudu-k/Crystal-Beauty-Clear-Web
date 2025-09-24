@@ -79,10 +79,29 @@ export function loginUser(req, res) {
     })
 }
 
-export function deleteUser() {
-    User.deleteOne({ email: req.body.email }).then(() => {
-        res.json({ message: "User Deleted" })
-    })
+export function deleteUser(req, res) {
+    try {
+        const email = req.body?.email || req.params?.email;
+        if (!email) {
+            return res.status(400).json({ message: "Email is required" });
+        }
+
+        // Optional: restrict to admin users
+        if (!isAdmin(req)) {
+            return res.status(403).json({ message: "Not authorized" });
+        }
+
+        User.deleteOne({ email }).then((result) => {
+            if (result.deletedCount === 0) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            res.json({ message: "User Deleted" });
+        }).catch(() => {
+            res.status(500).json({ message: "Error deleting user" });
+        });
+    } catch (e) {
+        res.status(500).json({ message: "Error deleting user" });
+    }
 };
 
 
