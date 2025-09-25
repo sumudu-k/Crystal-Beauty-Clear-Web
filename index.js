@@ -48,8 +48,8 @@ app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 
 
-app.listen(5001, () => {
-    console.log('Server is running on port 5001');
+app.listen(5050, () => {
+    console.log('Server is running on port 5050');
 });
 
 
