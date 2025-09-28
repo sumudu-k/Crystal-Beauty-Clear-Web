@@ -160,14 +160,14 @@ This project is licensed under the MIT License.
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web/refs/heads/main/Screenshots/cbc-cover1.png" width="48%" />
-  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web-FrontEnd/main/screenshots/cbc-cover2.png" width="48%" />
+  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web/refs/heads/main/Screenshots/cbc-cover2.png" width="48%" />
 </p>
 <p float="left">
-  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web-FrontEnd/main/screenshots/cbc-cover3.png" width="48%" />
-  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web-FrontEnd/main/screenshots/cbc-cover4.png" width="48%" />
+  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web/refs/heads/main/Screenshots/cbc-cover3.png" width="48%" />
+  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web/refs/heads/main/Screenshots/cbc-cover4.png" width="48%" />
 </p>
 <p float="left">
-  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web-FrontEnd/main/screenshots/cbc-cover5.png" width="48%" />
+  <img src="https://raw.githubusercontent.com/sumudu-k/Crystal-Beauty-Clear-Web/refs/heads/main/Screenshots/cbc-cover5.png" width="48%" />
 </p>
 ---
 
