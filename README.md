@@ -10,7 +10,8 @@ Crystal Beauty Clear is a fully responsive MERN stack e-commerce platform focuse
   <img src="https://img.shields.io/badge/Visit-Live%20Website-%23ee0000?style=for-the-badge&logo=globe&logoColor=white" style="height:40px; background-color:blue;" />
 </a>
 <br>
-🔗 Website: https://cbc.sumudu.site
+
+## 🔗 Website: https://cbc.sumudu.site
 
 ---
 
