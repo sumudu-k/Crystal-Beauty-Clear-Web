@@ -6,7 +6,6 @@ export async function createOrder(req, res) {
     //order number format
     // cbc0001
 
-    //first check user is logged in 
     if (!isCustomer(req)) {
         res.status(401).json({
             message: 'Please login to place an order'
@@ -14,7 +13,6 @@ export async function createOrder(req, res) {
         return;
     }
 
-    // take the latest order id
     try {
         const latestOrder = await Order.find().sort({ orderId: -1 }).limit(1);
 
@@ -35,12 +33,6 @@ export async function createOrder(req, res) {
         const newProductArray = [];
 
         for (let i = 0; i < newOrderdata.orderedItems.length; i++) {
-
-            //print the ordered items
-            //console.log(newOrderdata.orderedItems[i]);
-
-            //Product is the model we created in product.js
-            //load all product details from the product model which relavent to the ordered items
             const product = await Product.findOne({
                 productId: newOrderdata.orderedItems[i].productId
             })
@@ -52,7 +44,6 @@ export async function createOrder(req, res) {
                 return;
             }
 
-            //get the product details what we need to create the ordered items array in json
             newProductArray[i] = {
                 name: product.productName,
                 price: product.lastPrice,
@@ -62,7 +53,6 @@ export async function createOrder(req, res) {
         }
         console.log(newProductArray);
 
-        //replace the ordered items array with the newProductArray
         newOrderdata.orderedItems = newProductArray;
 
 

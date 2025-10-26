@@ -3,7 +3,6 @@ import { createUser, googleLogin, loginUser, deleteUser } from '../controllers/u
 
 const userRouter = express.Router();
 
-// create routes
 userRouter.post("/", createUser);
 userRouter.post("/login", loginUser)
 userRouter.post("/google", googleLogin)

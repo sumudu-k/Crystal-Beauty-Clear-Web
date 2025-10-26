@@ -86,7 +86,6 @@ export function deleteUser(req, res) {
             return res.status(400).json({ message: "Email is required" });
         }
 
-        // Optional: restrict to admin users
         if (!isAdmin(req)) {
             return res.status(403).json({ message: "Not authorized" });
         }
