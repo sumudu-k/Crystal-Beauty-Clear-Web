@@ -126,7 +126,6 @@ export function isCustomer(req) {
 }
 
 export async function googleLogin(req,res){
-    // in here user/google send a token when signin. get that token and send it to the googleapis to decode.decoded values send as a json
     console.log(req.body)
     const token=req.body.token
     // https://www.googleapis.com/oauth2/v3/userinfo
@@ -136,10 +135,7 @@ export async function googleLogin(req,res){
                 Authorization:`Bearer ${token}`
             }
         })
-        // res.json({
-        //     message:"Google login successful",
-        //     user:response.data
-        // })
+
         const email=response.data.email
         const usersList =await User.find({email:email})
 
